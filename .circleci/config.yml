@@ -316,18 +316,35 @@ jobs:
       # Docker image here that supports Ansible
       - image: ansible/ansible
     steps:
-      # Checkout code from git
-      # Add ssh keys with fingerprint
-      # attach workspace
+      - checkout       
+      - add_ssh_keys:
+          fingerprints: ["d0:38:71:c0:e6:2a:d5:52:46:4b:e5:2d:4b:92:15:87"]
+      - attach_workspace:
+          at: ~/
       - run:
-          name: Install dependencies
+          name: Install aws dependencies
           command: |
-            # your code here
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
       - run:
           name: Deploy backend
           command: |
-            # your code here
+            cd backend # echo TYPEORM_HOST=$TYPEORM_HOST >> "backend/.env"
+            npm i
+            npm run build
+            cd ..
+            # Zip the directory
+            tar -C backend -czvf artifact.tar.gz .
+            mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
+            mv artifact.tar.gz .circleci/ansible/roles/deploy/files/artifact.tar.gz
+            cd .circleci/ansible
+            echo "Contents  of the inventory.txt file is -------"
+            cat inventory.txt
+            ansible-playbook -i inventory.txt deploy-backend.yml -v
       # Here's where you will add some code to rollback on failure  
+      - revert-migrations
+      - destroy-environment     
 
   smoke-test:
     docker:
