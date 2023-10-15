@@ -264,7 +264,7 @@ jobs:
           name: Install dependencies
           command: |
             yum install -y tar gzip curl gcc-c++ make
-            yum install https://rpm.nodesource.com/pub_20.x/nodistro/repo/nodesource-release-nodistro-1.noarch.rpm -y
+            yum install https://rpm.nodesource.com/pub_18.x/nodistro/repo/nodesource-release-nodistro-1.noarch.rpm -y --skip-broken
             yum install nodejs -y --setopt=nodesource-nodejs.module_hotfixes=1
             node -v
             npm -v              
