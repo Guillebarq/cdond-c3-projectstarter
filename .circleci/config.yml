@@ -263,7 +263,7 @@ jobs:
       - run:
           name: Install tar and gzip
           command: |
-            yum install -y tar gzip curl gcc-c++ make
+            yum install -y tar gzip curl gcc-c++ make python3-pip
       - restore_cache:
           keys:
             - frontend-build
@@ -284,8 +284,8 @@ jobs:
       - run:
           name: Install ansible and awscli
           command: |
-            pip install ansible
-            pip install awscli
+            pip3 install ansible
+            pip3 install awscli
       - run:
           name: Get backend url
           command: |
