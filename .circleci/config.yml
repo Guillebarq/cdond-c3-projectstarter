@@ -256,26 +256,28 @@ jobs:
   deploy-frontend:
     docker:
       # Docker image here that supports AWS CLI
-      - image: cimg/node:13.14.0
+      - image: amazon/aws-cli
     steps:
       # Checkout code from git
       - checkout
       - run:
-          name: Installing necessary packages
+          name: Install dependencies
           command: |
-            sudo apt update
-            sudo apt install -y tar gzip curl software-properties-common
+            yum install -y tar gzip curl
+            curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+            yum install -y nodejs              
       - run:
-          name: Installing aws-cli
+          name: Install node
           command: |
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm install 16
       - run:
-          name: Installing ansible
+          name: Install ansible and awscli
           command: |
-            sudo -E add-apt-repository --yes --update ppa:ansible/ansible
-            sudo apt install ansible
+            pip3 install ansible
+            pip3 install awscli
       - run:
           name: Get backend url
           command: |
