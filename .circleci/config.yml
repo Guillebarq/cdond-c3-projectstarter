@@ -31,14 +31,14 @@ commands:
     steps:
       - run:
           name: Revert migrations
-          # Add when this will run
+          when: on_fail
           command: |
             SUCCESS=$(curl --insecure  https://kvdb.io/LBcnJjxskczGJWNszqSJsH/migration_<< parameters.Workflow_ID >>)
             if(( $SUCCESS==1 )); 
             then
-             cd ~/project/backend
-             npm install
-             npm run migration:revert
+                cd ~/project/backend
+                npm install
+                npm run migration:revert
             fi
             
 jobs:
@@ -388,7 +388,7 @@ jobs:
             echo ${URL} 
             if curl -s ${URL} | grep "Welcome"
             then
-              exit 1
+              exit 0
             else
               exit 1
             fi
