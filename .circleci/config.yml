@@ -256,7 +256,7 @@ jobs:
   deploy-frontend:
     docker:
       # Docker image here that supports AWS CLI
-      - image: amazon/aws-cli
+      - image: cimg/node:13.14.0
     steps:
       # Checkout code from git
       - checkout
