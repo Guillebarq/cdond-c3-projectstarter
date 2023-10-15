@@ -263,7 +263,7 @@ jobs:
       - run:
           name: Install tar and gzip
           command: |
-            yum install -y tar gzip curl gcc-c++ make python3-pip
+            yum install -y tar gzip curl gcc-c++ make python3-pip python37
       - restore_cache:
           keys:
             - frontend-build
