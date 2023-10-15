@@ -361,7 +361,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apk add python3 py3-pip 
+            apk add python3 py3-pip curl
             pip3 install awscli --upgrade --user 
             echo 'export PATH=~/.local/bin:$PATH' >> ~/.bashrc
             source ~/.bashrc
