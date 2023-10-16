@@ -218,13 +218,6 @@ jobs:
             apk add --update tar gzip ansible
             pip install awscli
       - run:
-          name: Install Ansible
-          command: |
-            apt update
-            apt install software-properties-common -y
-            add-apt-repository --yes --update ppa:ansible/ansible
-            apt install ansible -y
-      - run:
           name: Configure server
           command: |
             export ANSIBLE_HOST_KEY_CHECKING=False
