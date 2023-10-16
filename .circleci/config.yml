@@ -209,7 +209,7 @@ jobs:
       - checkout       
       # Add ssh keys with fingerprint
       - add_ssh_keys:
-          fingerprints: ["d0:38:71:c0:e6:2a:d5:52:46:4b:e5:2d:4b:92:15:87"]
+          fingerprints: ["ab:88:8b:21:29:e6:64:92:58:11:7c:4e:90:f0:8b:62"]
       - attach_workspace:
           at: ~/
 
@@ -318,7 +318,7 @@ jobs:
     steps:
       - checkout       
       - add_ssh_keys:
-          fingerprints: ["d0:38:71:c0:e6:2a:d5:52:46:4b:e5:2d:4b:92:15:87"]
+          fingerprints: ["ab:88:8b:21:29:e6:64:92:58:11:7c:4e:90:f0:8b:62"]
       - attach_workspace:
           at: ~/
       - run:
@@ -358,6 +358,8 @@ jobs:
       - image: cimg/node:13.8.0
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints: ["ab:88:8b:21:29:e6:64:92:58:11:7c:4e:90:f0:8b:62"]
       - run:
           name: Install dependencies
           command: |
