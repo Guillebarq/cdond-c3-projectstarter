@@ -221,7 +221,6 @@ jobs:
             apk add openssh-client
             apk add --update tar
             apk add --update gzip
-            apk add ansible
             pip3 install awscli
       - run:
           name: Configure server
@@ -248,12 +247,13 @@ jobs:
               npm run build
               npm run migrations > migrations_dump.txt
               cat migrations_dump.txt
+              echo "done"
       - run:
           name: Send migration to kvdb.io
           command: |
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
-              curl https://kvdb.io/LBcnJjxskczGJWNszqSJsH/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+              curl -v https://kvdb.io/LBcnJjxskczGJWNszqSJsH/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
       - destroy-environment
       - revert-migrations      
