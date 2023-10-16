@@ -373,7 +373,7 @@ jobs:
       - install_awscli
       - install_nodejs
       - run:
-          name: Remove old stacks and files
+          name: Fetch old stack worklow ID and cleanup
           command: |
             export STACKS=($(aws cloudformation list-stacks \
                 --query "StackSummaries[*].StackName" \
@@ -381,7 +381,7 @@ jobs:
             echo Stack names: "${STACKS[@]}"
             export OldWorkflowID=$(curl --insecure https://kvdb.io/LBcnJjxskczGJWNszqSJsH/old_workflow_id)
             echo Old Workflow ID: $OldWorkflowID 
-            if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
+            if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
             then
               echo '----------------------------------Delete Confirmed------------------------------------'
               aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
