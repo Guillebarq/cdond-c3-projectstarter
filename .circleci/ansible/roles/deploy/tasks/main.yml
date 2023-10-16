@@ -15,6 +15,7 @@
     npm i
 
 - name: "Executing Node app with PM2"
+  become: true
   shell:
     npm install
     pm2 stop all
