@@ -244,10 +244,12 @@ jobs:
           command: |
               cd backend
               npm install
+              echo "Just installed"
+              npm run build
+              echo "Just Built"
               npm run migrations > migrations_dump.txt
-              echo "---------------------------------------------"
+              echo "Just did migrations"
               cat migrations_dump.txt
-              echo "done"
       - run:
           name: Send migration to kvdb.io
           command: |
