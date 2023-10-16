@@ -358,8 +358,6 @@ jobs:
       - image: cimg/node:13.8.0
     steps:
       - checkout
-      - add_ssh_keys:
-          fingerprints: ["d0:38:71:c0:e6:2a:d5:52:46:4b:e5:2d:4b:92:15:87"]
       - run:
           name: Install dependencies
           command: |
