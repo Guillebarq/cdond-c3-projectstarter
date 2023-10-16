@@ -217,7 +217,7 @@ jobs:
           command: |
             sudo apt install -y tar gzip curl
       - restore_cache:
-          keys: [build-backend]
+          keys: [backend-deps]
       - run:
           name: Run migrations
           command: |
