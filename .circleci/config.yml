@@ -84,7 +84,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-deps]
+          keys: [backend-build]
       - run:
           name: Back-end build
           command: |
@@ -93,7 +93,7 @@ jobs:
             npm run build
       - save_cache:
           paths: [backend/node_modules]
-          key: backend-deps
+          key: backend-build
   test-frontend:
     docker:
       - image: cimg/node:13.8.0
@@ -113,7 +113,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-deps]
+          keys: [backend-build]
       - run:
           name: Back-end Unit Test
           command: |
@@ -141,7 +141,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-deps]
+          keys: [backend-build]
       - run:
           name: Back-end Scan
           command: |
@@ -219,7 +219,7 @@ jobs:
             unzip -qq awscliv2.zip
             sudo ./aws/install
       - restore_cache:
-          keys: [backend-deps]
+          keys: [backend-build]
       - attach_workspace:
           at: ~/
       - run:
@@ -280,7 +280,7 @@ jobs:
       - attach_workspace:
           at: ~/
       - restore_cache:
-          keys: [backend-deps]
+          keys: [backend-build]
       - run:
           name: Install dependencies
           command: |
@@ -360,8 +360,9 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/cloudfront.yml \
-              --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides WorkflowID="udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
               --stack-name InitialStack
+              --tags project=udapeople
       - destroy-environment
       - revert-migrations
   cleanup:
@@ -414,8 +415,8 @@ workflows:
           requires: [run-migrations]
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
-      # - cloudfront-update:
-      #     requires: [smoke-test]
+      - cloudfront-update:
+          requires: [smoke-test]
       # - cleanup:
       #     requires: [cloudfront-update]
 
