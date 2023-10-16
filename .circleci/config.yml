@@ -358,6 +358,8 @@ jobs:
       - image: cimg/node:13.8.0
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints: ["d0:38:71:c0:e6:2a:d5:52:46:4b:e5:2d:4b:92:15:87"]
       - run:
           name: Install dependencies
           command: |
@@ -365,14 +367,10 @@ jobs:
             unzip awscliv2.zip
             sudo ./aws/install
             aws --version
-      # - run:
-      #     name: Get backend url
-      #     command: |
-      #       # your code here
       - run:
           name: Backend smoke test.
           command: |
-            export BACKEND_IP=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+            export BACKEND_IP=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" --query 'Reservations[*].Instances[*].PublicDnsName' --output text)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"  
             curl -s ${API_URL}/api/status -v 
