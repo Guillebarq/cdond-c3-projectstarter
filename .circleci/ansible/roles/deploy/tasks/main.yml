@@ -21,8 +21,8 @@
     pm2 stop all
     pm2 start npm --name "udapeople-backend" -- run start
   environment:
-    # ENVIRONMENT: production
-    # NODE_ENV: production
+    ENVIRONMENT: production
+    NODE_ENV: production
     TYPEORM_CONNECTION: postgres
     TYPEORM_MIGRATIONS_DIR: ./src/migrations
     TYPEORM_ENTITIES: ./src/modules/**/*.entity.ts
