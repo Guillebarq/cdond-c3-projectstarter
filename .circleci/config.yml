@@ -212,7 +212,13 @@ jobs:
           fingerprints: ["a3:53:76:98:e7:60:8e:ce:d2:82:a1:4f:77:e7:1a:7f"]
       - attach_workspace:
           at: ~/
-
+      - run:
+          name: Install Ansible
+          command: |
+            sudo apt update
+            sudo apt install software-properties-common -y
+            sudo add-apt-repository --yes --update ppa:ansible/ansible
+            sudo apt install ansible -y
       - run:
           name: Install dependencies
           command: |
