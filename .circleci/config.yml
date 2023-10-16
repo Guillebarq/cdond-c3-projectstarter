@@ -196,10 +196,6 @@ jobs:
       - checkout
       - install_awscli
       - run:
-          name: Install tar and zip utilities
-          command: |
-            yum -y install tar gzip
-      - run:
           name: Deploy back-end infrastructure
           command: |
             aws cloudformation deploy \
