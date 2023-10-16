@@ -35,6 +35,7 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub backend-${ID}
+          
 Outputs:
   InstanceIP:
     Description: EC2 instance public IP
