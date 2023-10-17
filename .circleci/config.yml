@@ -120,6 +120,7 @@ jobs:
             cd backend
             npm install
             npm test
+            
   scan-frontend:
     docker:
       - image: cimg/node:13.8.0
